@@ -1,7 +1,7 @@
-name: "Genome 2 Phenome"
+name: "VIP"
 output_dir: "."
 navbar:
-  title: "Genome 2 Phenome"
+  title: "VIP"
   left:
     - text: "Home"
       href: index.html
