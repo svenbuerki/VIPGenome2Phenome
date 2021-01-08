@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Sven Buerki" />
+
+<meta name="date" content="2021-01-08" />
+
+<title>VIP – Genome 2 Phenome</title>
+
+<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Genome 2 Phenome</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">VIP – Genome 2 Phenome</h1>
+<h3 class="subtitle">Syllabus</h3>
+<h4 class="author">Sven Buerki</h4>
+<h4 class="date">2021-01-08</h4>
+
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#header').parent().prepend('<div id=\"logo\"><img src=\"Images/boisestate-primarylogo-2color-rgb.png\" style=\"position:absolute; top:0; right:0; padding:10px; height:120px\"></div>');
+  $('#header').css('margin-right', '120px')
+});
+</script>
+<div id="instructor" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Instructor</h1>
+<ul>
+<li>Name: Sven Buerki</li>
+<li>Office: Science building, office 114 (ground floor).</li>
+<li>Email: <a href="mailto:svenbuerki@boisestate.edu" class="email">svenbuerki@boisestate.edu</a></li>
+<li>Office hours: By appointment.</li>
+</ul>
+</div>
+<div id="meet-the-team" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Meet the team</h1>
+<p>As part of this VIP course, students will be active members of a research team at BSU and work with the following mentors (in addition to the instructor):</p>
+<ul>
+<li>Dr Anthony Melton (<a href="mailto:anthonymelton@boisestate.edu" class="email">anthonymelton@boisestate.edu</a>): Post Doctoral Research Scientist.</li>
+<li>M.S. Peggy Martinez (<a href="mailto:peggymartinez@boisestate.edu" class="email">peggymartinez@boisestate.edu</a>): Laboratory Technician.</li>
+<li>M.S. Michael Wojahn (<a href="mailto:mikewojahn@u.boisestate.edu" class="email">mikewojahn@u.boisestate.edu</a>): EEB Ph.D. student.</li>
+<li>Carlos Dumaguit (<a href="mailto:carlosdavedumagu@u.boisestate.edu" class="email">carlosdavedumagu@u.boisestate.edu</a>): Master student.</li>
+</ul>
+</div>
+<div id="our-class-ethos" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Our class ethos</h1>
+<blockquote>
+<p>Everyone here is smart; distinguish yourself by being kind.</p>
+<footer>
+Kindness in Science is an inclusive approach that fosters diversity, respect, wellbeing &amp; openness leading to better science outcomes.
+</footer>
+</blockquote>
+<p><img src="Images/Kindness.png" width="40%" style="display: block; margin: auto 0 auto auto;" /></p>
+</div>
+<div id="vip-bsu-webpage" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> VIP BSU webpage</h1>
+<p>The webpage dedicated to this course is available here:</p>
+<ul>
+<li><a href="https://www.boisestate.edu/vip/genome-2-phenome/" class="uri">https://www.boisestate.edu/vip/genome-2-phenome/</a></li>
+</ul>
+</div>
+<div id="course-delivery-type" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Course delivery type</h1>
+<p>To accommodate physical distancing and other safety measures necessitated by the coronavirus pandemic, the university is making changes to its Spring 2021 course schedule. <strong>This course will be taught remotely.</strong> This means that courses meet virtually via technology (here Zoom) at scheduled class meeting times. Students are also expected to be working individually and reporting on their progress during either scheduled class meeting times or individual meetings with their mentors.</p>
+<div id="what-technology-do-you-need" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> What technology do you need?</h2>
+<p>Here are some key points for remote teaching:</p>
+<ul>
+<li>You will need reliable access to a computer with an internet connection and a webcam.</li>
+<li>You will need to install a suite of software on your computer (<a href="https://boisestate.zoom.us">Zoom</a>, <a href="https://cran.r-project.org">R</a>, <a href="https://www.rstudio.com">RStudio</a>). Please see <a href="#software">the computing tools of reproducible science</a> section below for more details.</li>
+<li>More information on Zoom provided by BSU is available <a href="https://www.boisestate.edu/oit-learning/video/zoom/">here</a>.</li>
+<li>VPN access using <a href="https://www.cisco.com/c/en/us/support/security/anyconnect-secure-mobility-client-v4-x/model.html#~tab-downloads">Cisco AnyConnect Secure Mobility Client</a>. This software will facilitate remote access to Linux boxes for bioinformatic analyses. Students using Windows operating systems will have to download Putty or a similar software to remotely access Linux computer using <code>ssh</code> protocol. Putty can be downloaded at this URL <a href="http://www.putty.org" class="uri">http://www.putty.org</a> (follow instructions to install it on your computer).</li>
+<li>If you have concerns about access to technology needed for your courses this fall, the <a href="https://www.boisestate.edu/oit/assistance/">Help Desk</a> is the place to begin to discuss your needs. The instructor would also gladly help you with any technology needs.</li>
+</ul>
+</div>
+</div>
+<div id="class-schedule" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Class schedule</h1>
+<div id="meeting-days-and-times" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Meeting days and times</h2>
+<ul>
+<li><strong>Friday from 11:00 AM to 12:00 PM</strong>.</li>
+</ul>
+<p>This time slot will be used for teaching, research lab meetings and presenting scientific results. At the end of our meetings (most likely in the last 10 minutes), we will be taking advantage of the Zoom breakout room feature to allow students to discuss with their mentors and report on their progress as well as set individual weekly expectations.</p>
+<p>Finally, we are requiring students to allocate time outside of class to advance their individual research projects (see below for more details). We will be discussing setting-up weekly meetings to discuss with their mentors and reporting progress.</p>
+</div>
+<div id="zoom-information" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Zoom information</h2>
+<p>Class will take place remotely using the <a href="https://boisestate.zoom.us">Zoom</a> platform. A fully-licensed Zoom account is available to all faculty, staff, and students at Boise State. Zoom is a great tool for conducting remote meetings that allows you to see and hear one another, chat, share your computer screen, and more. In our case, we will be taking advantage of the remote control and breakout room features. The first feature will allow users to take control of another participant’s screen in a meeting. This is especially useful to help working on and debugging R code. The second feature will maximizing communication between students and their mentors. Please see the following Zoom webpages for more details on:</p>
+<ul>
+<li>Remote support session: <a href="https://support.zoom.us/hc/en-us/articles/208072316-Remote-Support-Session" class="uri">https://support.zoom.us/hc/en-us/articles/208072316-Remote-Support-Session</a></li>
+<li>Requesting or giving remote control: <a href="https://support.zoom.us/hc/en-us/articles/201362673-Requesting-or-giving-remote-control#heading=h.bdhzh38o7ljq" class="uri">https://support.zoom.us/hc/en-us/articles/201362673-Requesting-or-giving-remote-control#heading=h.bdhzh38o7ljq</a></li>
+<li>Enabling breakout rooms: <a href="https://support.zoom.us/hc/en-us/articles/206476093-Enabling-breakout-rooms" class="uri">https://support.zoom.us/hc/en-us/articles/206476093-Enabling-breakout-rooms</a></li>
+</ul>
+</div>
+<div id="zoom-meeting" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Zoom meeting</h2>
+<p>Details to join the Zoom meetings are provided <a href="https://drive.google.com/drive/folders/1eaOHo6XctGBi92FSZT5nRQPT5jPk5fvl?usp=sharing">here</a>. Students will be granted access to this folder document prior to the start of the semester.</p>
+</div>
+</div>
+<div id="course-goal-description" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Course goal &amp; description</h1>
+<p>Students are joining a multi-disciplinary team to study the effect of climate change on northwestern US ecosystems. More specifically, students will be contributing to studying the effect of climate change on plants by investigating the contribution of genomic processes in underpinning phenotypes that are adapted to our rapidly changing environment. This will be done by designing, implementing and performing genotype-environment experiments, conducting gene expression analyses and identifying candidate genes underpinning environmental adaptations. Each of those steps in the scientific process will be supported by bioinformatic analyses. To broaden skills, students will receive targeted skills through three modules representing their scientific progression:</p>
+<ul>
+<li><strong>Module 1:</strong> Bioinformatics (here those tools are geared towards using R and UNIX-based systems to mine, download and analyze genomic data and linking those to phenotypes and environmental conditions).</li>
+<li><strong>Module 2:</strong> Greenhouse (design and conduct controlled GxE experiments to assess the ability of plants to cope with megadrought). Conducting greenhouse experiments might also involve conducting fieldwork in northwestern US (to collect seeds and tissue for laboratory analyses).</li>
+<li><strong>Module 3:</strong> Laboratory (e.g. DNA/RNA extractions, qPCR, <em>in vitro</em> tissue culture).</li>
+</ul>
+<p>Due to the pandemic, the Spring 2021 semester will be devoted on learning and implementing methodologies mostly associated to module 1.</p>
+<p>This VIP course is integrated into the NSF Idaho EPSCoR <a href="https://www.idahogem3.org">GEM3</a> program, which will provide opportunities for students to engage with members of this state wide initiative as well as multiple stakeholders (both national and regional).</p>
+</div>
+<div id="structure-of-the-course" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> <a name="Structure"></a>Structure of the course</h1>
+<p>For this semester, the course is subdivided into four parts:</p>
+<ul>
+<li><em>PART 1: Introduction to reproducible science, bioinformatics and genomic tools</em></li>
+<li><em>PART 2: Produce a research proposal</em></li>
+<li><em>PART 3: Conduct research project</em></li>
+<li><em>PART 4: Present your research</em></li>
+</ul>
+<div class="figure"><span id="fig:part2"></span>
+<img src="Images/Bioinformatic%20workflow_PART2.png" alt="Summary of the bioinformatic workflow that will be taught in this course." width="100%" />
+<p class="caption">
+Figure 8.1: Summary of the bioinformatic workflow that will be taught in this course.
+</p>
+</div>
+<p>Part 1 aims at providing students with key theoretical knowledge on this topic allowing them to successfully design a reproducible approach tailored to genome 2 phenome research. We will also concentrate on learning the RMarkdown computing language to mesh the different steps of the scientific process into a unique framework (see Figure <a href="#fig:part2">8.1</a>). Part 2 will be devoted to work with your mentors in developing an individual research proposal, which will be used as a benchmark to conduct your project (phase 3). Ultimately, this process will lead to the completion of a reproducible report, which will be used to carve an oral presentation at the end of the semester (part 4). We are advising students to start discussing their research questions with the team early in the semester to maximize your research experience.</p>
+</div>
+<div id="course-learning-outcomes" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Course learning outcomes</h1>
+<p>After successful completion of this course, students will be able to:</p>
+<ul>
+<li>Be a kind, respectful and active team member.</li>
+<li>Solve problems.</li>
+<li>Read scientific publications on genome 2 phenome research.</li>
+<li>Conduct a literature review using our <em>G2Pminer</em> R package.</li>
+<li>Use your literature review to design a research proposal.</li>
+<li>Lead and conduct a research project.</li>
+<li>Write a reproducible report.</li>
+<li>Practice communicating scientific results to peers.</li>
+<li>Learn computer programming in R and/or UNIX-based systems (Linux) geared towards analyzing genomic data.</li>
+</ul>
+</div>
+<div id="shared-google-drive" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> <a name="GoogleSite"></a>Shared Google Drive</h1>
+<p>A shared Google drive is set up to facilitate data sharing and allow students uploading their research projects.</p>
+<ul>
+<li><a href="https://drive.google.com/drive/folders/1eaOHo6XctGBi92FSZT5nRQPT5jPk5fvl?usp=sharing" class="uri">https://drive.google.com/drive/folders/1eaOHo6XctGBi92FSZT5nRQPT5jPk5fvl?usp=sharing</a></li>
+</ul>
+<p><strong>Note:</strong> The instructor will give students access to the Google drive folder at the start of the semester.</p>
+</div>
+<div id="publications-textbooks" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> <a name="Publis"></a>Publications &amp; textbooks</h1>
+<p>There are no assigned textbook to this course, however students will be reading scientific papers associated to their individual research projects. The team will be assisting students in reading and understanding scientific papers.</p>
+</div>
+<div id="the-computing-tools-of-reproducible-science" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> <a name="software"></a>The computing tools of reproducible science</h1>
+<p>Research is often presented in the form of slideshows, articles or books. These presentation documents announce a project’s findings, but they are not the research, they are the advertisement part of the research project!</p>
+<blockquote>
+<p><em>The research is the full software environment, code, and data that produced the results <span class="citation">(<a href="#ref-Donoho2010" role="doc-biblioref">Donoho, 2010</a>)</span>.</em></p>
+</blockquote>
+<p><strong>When we separate the research from its advertisement, we are making it difficult for others to verify the findings by reproducing them.</strong></p>
+<p>This course will give you the tools to dynamically combine your research with the presentation of your findings. The first tool will be a workflow for reproducible research weaving the principles of reproducibility throughout your entire research project, from data gathering to the statistical analysis, and the presentation of results. To reach this goal, you will learn how to use a number of computer tools that make this workflow possible. We will also be using a suite of bioinformatic tools associated to analyzing genomic data (e.g. BLAST, DNA alignment, secondary and tertiary protein structure, promoter analyses). We will do our very best to use bioinformatic pipelines, which are available online.</p>
+<div id="the-bioinformatic-tools" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> The bioinformatic tools</h2>
+<p>The main bioinformatic tools covered in this course are:</p>
+<ul>
+<li>The <strong>R</strong> statistical language that will allow you to gather data and analyze it.</li>
+<li>The <strong>LaTeX</strong> and <strong>Markdown</strong> markup languages that you can use to create documents (slideshows, articles, books, webpages) for presenting your findings.</li>
+<li>The <em>knitr</em> and <em>rmarkdown</em> <strong>packages</strong> for R and other tools, including <strong>command-line shell programs</strong> like GNU Make and Git version control, for dynamically tiding your data gathering, analysis, and presentation documents together so that they can be easily reproduced.</li>
+<li><strong>RStudio</strong>, a program that brings all of these tools together in one place.</li>
+</ul>
+</div>
+<div id="installing-the-main-software" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Installing the main software</h2>
+<p>As shown above, <strong>R</strong> and <strong>RStudio</strong> are at the core of this course and will have to be installed on your computers. This can be easily done by downloading the software from the following websites:</p>
+<ul>
+<li><strong>R</strong>: <a href="https://www.r-project.org" class="uri">https://www.r-project.org</a></li>
+<li><strong>RStudio</strong>: <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a></li>
+</ul>
+<p>The download webpages for these software have comprehensive information on how to install them, so please refer to those pages for more information.</p>
+</div>
+<div id="installing-markup-languages" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Installing markup languages</h2>
+<p>If you are planning to create LaTeX documents, you will need to install a Tex distribution. Please refer to this website for more details: <a href="https://www.latex-project.org/get/" class="uri">https://www.latex-project.org/get/</a></p>
+<p>If you want to create Markdown documents you can separately install the <em>rmarkdown</em> package in R (see <a href="#Rpack">below</a> for more details).</p>
+</div>
+<div id="installing-r-packages" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> <a name="Rpack"></a>Installing R packages</h2>
+<p>We will be using a number of R packages especially designed to support reproducible research. Many of those packages are not included in the default R installation and will need to be installed separately.
+To install key packages used in class, copy the following code and paste it into your R console:</p>
+<pre class="r"><code>install.packages(c(&quot;brew&quot;, &quot;countrycode&quot;, &quot;devtools&quot;, &quot;dplyr&quot;, &quot;ggplot2&quot;, &quot;googleVis&quot;, 
+    &quot;knitr&quot;, &quot;rmarkdown&quot;, &quot;tidyr&quot;, &quot;xtable&quot;))</code></pre>
+<p>Once you enter this code, you may be asked to select a CRAN “mirror” to download the packages from. Simply select the mirror closest to you.</p>
+<p>Finally, it is highly likely that we will have to install additional packages. In this case, you can simply install it by using the same R function <code>install.packages()</code> or by using RStudio as follows: Select “Tools” -&gt; “Install Packages …” and then type the name of the package in the window (make sure to tick the “Install dependencies” box).</p>
+</div>
+</div>
+<div id="rstudio-cheat-sheets-a-gold-mine-to-design-your-bioinformatic-tutorials" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> <a name="Cheat"></a>RStudio Cheat Sheets: A gold mine to design your bioinformatic tutorials</h1>
+<p>RStudio provides a suite of cheat sheets that can be accessed by going to the “Help” menu and selecting “Cheatsheets.”</p>
+<p>Five cheat sheets are especially relevant to materials taught in this course:</p>
+<ul>
+<li><em>RStudio IDE : Cheat sheet</em></li>
+<li><em>Data Manipulation with dplyr, tidyr</em></li>
+<li><em>Data Visualization with ggplot2</em></li>
+<li><em>R Markdown Cheat Sheet</em></li>
+<li><em>R Markdown Reference Guide</em></li>
+</ul>
+</div>
+<div id="r-tutorials" class="section level1" number="14">
+<h1><span class="header-section-number">14</span> R tutorials</h1>
+<p>Please find below two documents providing a comprehensive introduction to R:</p>
+<ul>
+<li>R for beginners (a tutorial by Emmanuel Paradis): <a href="https://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf" class="uri">https://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf</a></li>
+<li>An introduction to R: <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf" class="uri">https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf</a></li>
+</ul>
+</div>
+<div id="assessment-grading" class="section level1" number="15">
+<h1><span class="header-section-number">15</span> Assessment &amp; grading</h1>
+<p>There will not be any classical exams in this VIP course, but we will rather focus on developing theoretical and bioinformatic skills and applying those to research. In this context, each student will be asked to:</p>
+<ul>
+<li>Attend weekly research lab meetings (TOTAL 32 points; 2 points per lab).</li>
+<li>Produce a research proposal, execute research and write reproducible report (TOTAL 300 points).</li>
+<li>Present their research to their peers (TOTAL 50 points). Last semester students have presented posters at the BSU VIP symposium. We expect this event to be organized at the end of this semester and will therefore requested attendance from our students.</li>
+</ul>
+<p>As stated above, we expect students to write their research proposals and reports using the RMarkdown language, which allows integrating data, code and text. We are aware that students are at different stages of their curriculum and have also signed up for 1 or 2 credits. In this context, we will be establishing expectations and associated milestones on an individual basis, but each student will have three graded assessments to deliver (see above to know more about point allocations). Attending research lab meetings is expected semester long (32 points), whereas we will set specific deadlines to produce the research proposal (100 points), execute the research (100 points) and write the reproducible report (100 points). Finally, oral presentations (50 points) will take place during the last two weeks of the semester and consist of 15 minutes powerpoint presentations. The reproducible report should be submitted to the instructor on week 16 for grading. However, we will be grading your research proposal and research execution prior to submission of the final report. Finally, we would like to stress that you are not alone in this endeavor, but rather part of a team. This means that you will be working alongside mentors, which will be able to provide guidance and comment on your research.</p>
+<p>Students will be graded based on the three tasks presented above and those are summing to a total of <strong>382 points</strong>. Table <a href="#tab:mygrade">15.1</a> exhibits the grading scale applied in this course.</p>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:mygrade">Table 15.1: </span>Grading scale applied in this course.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Percentage
+</th>
+<th style="text-align:left;">
+Grade
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+100-98
+</td>
+<td style="text-align:left;">
+A+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+97.9-93
+</td>
+<td style="text-align:left;">
+A
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+92.9-90
+</td>
+<td style="text-align:left;">
+A-
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+89.9-88
+</td>
+<td style="text-align:left;">
+B+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+87.9-83
+</td>
+<td style="text-align:left;">
+B
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+82.9-80
+</td>
+<td style="text-align:left;">
+B-
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+79.9-78
+</td>
+<td style="text-align:left;">
+C+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+77.9-73
+</td>
+<td style="text-align:left;">
+C
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+72.9-70
+</td>
+<td style="text-align:left;">
+C-
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+69.9-68
+</td>
+<td style="text-align:left;">
+D+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+67.9-60
+</td>
+<td style="text-align:left;">
+D
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+59.9-0
+</td>
+<td style="text-align:left;">
+F
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="late-work-policy" class="section level1" number="16">
+<h1><span class="header-section-number">16</span> Late work policy</h1>
+<p>The instructor and the team are expecting students to deliver their assignments on time and set enough time aside to work on their projects (see above for more details). However, if you have any issues preventing completion of your work on time, please contact us as soon as possible to find common solutions.</p>
+</div>
+<div id="engagement-expectations" class="section level1" number="17">
+<h1><span class="header-section-number">17</span> Engagement expectations</h1>
+<p>The remote teaching mode of this course makes it harder for the instructor to take attendance. The instructor is expecting students to attend research lab meetings (please join on time and for the full duration of the meeting) and actively engage by asking questions and giving feedback on teaching material and course content. This course was designed to help students implementing a reproducible approach to their research projects. If you are judging that additional content should be covered, please contact the instructor. The instructor will do his very best to obtain information or seek support from the team to cover the requested material. Finally, the instructor is aware that COVID could potentially impact yourselves and your families. In the case that you have any issues attending class or conducting your research, please contact the instructor by email (<a href="mailto:svenbuerki@boisestate.edu" class="email">svenbuerki@boisestate.edu</a>) asap and see below for more details.</p>
+</div>
+<div id="what-you-can-expect-of-us" class="section level1" number="18">
+<h1><span class="header-section-number">18</span> What you can expect of us</h1>
+<p>The instructor and the team will be prepared for class, on time and not leave early. We will also be respectful of you and your opinions. Overall, we want to foster a kind and respectful class environment where all students can express themselves and share their opinions. This means that meaningful and constructive dialogue is encouraged in this class and it requires a degree of mutual respect, willingness to listen, and tolerance of opposing points of view. Respect for individual differences and alternative viewpoints will be maintained at all times in this class. One’s words and use of language should be temperate and within acceptable bounds of civility and decency. Finally, we will reply to emails and grade tests as soon as possible (and provide positive criticism) to allow students mastering the material presented in class.</p>
+<p>We would like to point out that this is not a classical course since students will be immersed into research. This means that we will do our very best to guide students into research, but we don’t have answers to all your questions.</p>
+</div>
+<div id="this-course-was-designed-with-you-in-mind" class="section level1" number="19">
+<h1><span class="header-section-number">19</span> This course was designed with you in mind</h1>
+<p>We have developed this course to provide a welcoming environment and effective, equitable learning experience for all students. If you encounter barriers in this course, please bring them to our attention so that we may work to address them.</p>
+<div id="this-classs-community-is-inclusive" class="section level2" number="19.1">
+<h2><span class="header-section-number">19.1</span> This class’s community is inclusive</h2>
+<p>Students in this class represent a rich variety of backgrounds and perspectives. The Biological Sciences department is committed to providing an atmosphere for learning that respects diversity and creates inclusive environments in our courses. While working together to build this community, we ask all members to:</p>
+<ul>
+<li>Share their unique experiences, values, and beliefs, if comfortable doing so.</li>
+<li>Listen deeply to one another.</li>
+<li>Honor the uniqueness of their peers.</li>
+<li>Appreciate the opportunity we have to learn from each other in this community.</li>
+<li>Use this opportunity together to discuss ways in which we can create an inclusive environment in this course and across the campus community.</li>
+<li>Recognize opportunities to invite a community member to exhibit more inclusive, equitable speech or behavior—and then also invite them into further conversation. We also expect community members to respond with gratitude and to take a moment of reflection when they receive such an invitation, rather than react immediately from defensiveness.</li>
+<li>Keep confidential any discussions that the community has of a personal (or professional) nature, unless the speaker has given explicit permission to share what they have said.</li>
+<li>Respect the right of students to be addressed and referred to by the names and pronouns that correspond to their gender identities, including the use of non-binary pronouns.</li>
+</ul>
+</div>
+<div id="we-use-each-others-preferred-names-and-pronouns" class="section level2" number="19.2">
+<h2><span class="header-section-number">19.2</span> We use each other’s preferred names and pronouns</h2>
+<p>Please let us know of your preferred or adopted name and gender pronoun(s), and we will make those changes to our own records and address you that way in all cases.</p>
+<p>To change to a preferred name so that it displays on all BSU sites, including Blackboard and the course roster, contact the Registrar’s Office at (208) 426-4249. Note that only a legal name change can alter your name on BSU official and legal documents (e.g., your transcript).</p>
+</div>
+<div id="this-course-is-accessible-to-students-with-disabilities" class="section level2" number="19.3">
+<h2><span class="header-section-number">19.3</span> This course is accessible to students with disabilities</h2>
+<p>We recognize that navigating your education and life can often be more difficult if you have disabilities. We want you to achieve at your highest capacity in this class. If you have a disability, the instructor needs to know if you encounter inequitable opportunities in this course related to:
+- Accessing and understanding course materials.
+- Engaging with course materials and other students in the course.
+- Demonstrating your skills and knowledge on assignments and exams.</p>
+<p>If you have a documented disability, you may be eligible for accommodations in all of your courses. To learn more, make an appointment with the university’s <a href="https://www.boisestate.edu/eac/">Educational Access Center</a>.</p>
+</div>
+<div id="for-students-responsible-for-children" class="section level2" number="19.4">
+<h2><span class="header-section-number">19.4</span> For students responsible for children</h2>
+<p>We recognize the unique challenges that can arise for students who are also parents or guardians of children. If you have any specific needs related to this topic, please contact the instructor asap.</p>
+</div>
+</div>
+<div id="academic-integrity" class="section level1" number="20">
+<h1><span class="header-section-number">20</span> Academic integrity</h1>
+<p>To create a welcoming, engaging, and effective learning environment, we expect all of us to exhibit behavior that reflects Boise State’s <a href="https://www.boisestate.edu/president/values/statement-of-shared-values/">Statement of Shared Values</a>. The Shared Values emphasize academic excellence, caring, citizenship, fairness, respect, responsibility, and trustworthiness. In keeping with these values, we expect students in this course to uphold the standards outlined in the Boise State University <a href="https://www.boisestate.edu/policy/student-affairs/code-of-conduct/">Student Code of Conduct</a>.</p>
+</div>
+<div id="student-well-being" class="section level1" number="21">
+<h1><span class="header-section-number">21</span> Student well-being</h1>
+<p>If you are struggling for any reason (COVID, relationship, family, or life’s stresses) and believe these may impact your performance in the course, we are encouraging you to contact the Dean of Students at (208) 426-1527 or email <a href="mailto:deanofstudents@boisestate.edu" class="email">deanofstudents@boisestate.edu</a> for support. Additionally, if you are comfortable doing so, please reach out to the instructor and he will provide any resources or accommodations that he can. If you notice a significant change in your mood, sleep, feelings of hopelessness or a lack of self worth, consider connecting immediately with Counseling Services (1529 Belmont Street, Norco Building) at (208) 426-1459 or email <a href="mailto:healthservices@boisestate.edu" class="email">healthservices@boisestate.edu</a>.</p>
+<div id="what-do-you-need" class="section level2" number="21.1">
+<h2><span class="header-section-number">21.1</span> What do you need?</h2>
+<p>The university has many resources designed to support you as a learner and human being. Among these are:</p>
+<ul>
+<li><a href="https://library.boisestate.edu/">Albertsons Library</a> provides a treasure trove of physical and electronic resources.
+<ul>
+<li>As you enter the library, straight ahead you’ll find the Reference Desk, where librarians can help you find the information and resources you need.</li>
+<li>The Circulation Desk lets students borrow various technologies.</li>
+<li>The MakerLab on the second floor offers tools for student use, and there are friendly staff in the MakerLab to help you learn how.</li>
+</ul></li>
+<li>The <a href="https://www.boisestate.edu/writingcenter/">Writing Center</a> offers individual consultations tailored to your needs, including making sense of writing assignment instructions, brainstorming, crafting a thesis, organizing an essay, revisions, citations, and more.</li>
+<li><a href="https://www.boisestate.edu/healthservices/counseling">Counseling Services</a> helps you tap into your strengths and find resources to deal more effectively with concerns that impact your pursuit of personal and academic goals. It emphasizes prevention and early detection and provides a broad spectrum of short-term counseling, consultative, evaluative, teaching, and training functions. Counseling staff consists of licensed counselors, psychologists, and closely supervised trainees/post-graduate interns.</li>
+<li>The <a href="https://www.boisestate.edu/genderequity/">Gender Equity Center</a> provides specialized, brief, no-cost, confidential support for campus members affected by:
+<ul>
+<li>Identity-related harassment.</li>
+<li>Sexual harassment, sexual assault, unhealthy relationships, and stalking.</li>
+<li>Life experiences related to gender, sexual orientation, and allyship.</li>
+<li>Life transitions and crisis.</li>
+<li>Personal, financial, or academic roadblocks.</li>
+</ul></li>
+<li><a href="https://www.boisestate.edu/mss/">Multicultural Student Services</a> works with all students interested in equity and social justice, students from different cultures, countries and ethnicities. The staff understands cultural differences and perspectives, and knows what it’s like living in a dominant culture. The training and the programs Multicultural Student Services provides can help you navigate through political correctness and into respectful dialogue. This center also provides:
+<ul>
+<li>Support and guidance for planning cultural festivals and events.</li>
+<li>In-center tutoring and studying lounge.</li>
+<li>Volunteer opportunities.</li>
+<li>Mentoring and Training.</li>
+<li>Programs and events.</li>
+</ul></li>
+<li>Food assistance: If you are hungry and cannot afford to purchase food, the campus has some resources to help you. You can visit the <a href="https://www.boisestate.edu/deanofstudents/student-support/food-help/food-pantry/">campus food pantry</a> or <a href="https://www.boisestate.edu/deanofstudents/student-support/food-help/meal-assistance/">get free meals in the campus dining hall</a>.</li>
+</ul>
+</div>
+</div>
+<div id="references" class="section level1" number="22">
+<h1><span class="header-section-number">22</span> References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Donoho2010" class="csl-entry">
+<span class="smallcaps">Donoho, D.L.</span> 2010. An invitation to reproducible computational research. <em>Biostatistics</em> 11: 385–388. Available at: <a href="http://dx.doi.org/10.1093/biostatistics/kxq028">http://dx.doi.org/10.1093/biostatistics/kxq028</a>.
+</div>
+</div>
+</div>
+<div id="appendix-1" class="section level1 appendix" number="23">
+<h1><span class="header-section-number">23</span> Appendix 1</h1>
+<p>Citations of all R packages used to generate this report.</p>
+<p>[1] J. Allaire, Y. Xie, J. McPherson, et al. <em>rmarkdown: Dynamic
+Documents for R</em>. R package version 2.6. 2020. &lt;URL:
+<a href="https://github.com/rstudio/rmarkdown" class="uri">https://github.com/rstudio/rmarkdown</a>&gt;.</p>
+<p>[2] C. Boettiger. <em>knitcitations: Citations for Knitr Markdown Files</em>.
+R package version 1.0.10. 2019. &lt;URL:
+<a href="https://github.com/cboettig/knitcitations" class="uri">https://github.com/cboettig/knitcitations</a>&gt;.</p>
+<p>[3] M. C. Koohafkan. <em>kfigr: Integrated Code Chunk Anchoring and
+Referencing for R Markdown Documents</em>. R package version 1.2. 2015.
+&lt;URL: <a href="https://github.com/mkoohafkan/kfigr" class="uri">https://github.com/mkoohafkan/kfigr</a>&gt;.</p>
+<p>[4] R Core Team. <em>R: A Language and Environment for Statistical
+Computing</em>. R Foundation for Statistical Computing. Vienna, Austria,
+2019. &lt;URL: <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>&gt;.</p>
+<p>[5] H. Wickham and J. Bryan. <em>usethis: Automate Package and Project
+Setup</em>. R package version 1.6.3. 2020. &lt;URL:
+<a href="https://CRAN.R-project.org/package=usethis" class="uri">https://CRAN.R-project.org/package=usethis</a>&gt;.</p>
+<p>[6] H. Wickham, R. François, L. Henry, et al. <em>dplyr: A Grammar of
+Data Manipulation</em>. R package version 1.0.2. 2020. &lt;URL:
+<a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a>&gt;.</p>
+<p>[7] H. Wickham, J. Hester, and W. Chang. <em>devtools: Tools to Make
+Developing R Packages Easier</em>. R package version 2.3.2. 2020. &lt;URL:
+<a href="https://CRAN.R-project.org/package=devtools" class="uri">https://CRAN.R-project.org/package=devtools</a>&gt;.</p>
+<p>[8] Y. Xie. <em>bookdown: Authoring Books and Technical Documents with R
+Markdown</em>. ISBN 978-1138700109. Boca Raton, Florida: Chapman and
+Hall/CRC, 2016. &lt;URL: <a href="https://github.com/rstudio/bookdown" class="uri">https://github.com/rstudio/bookdown</a>&gt;.</p>
+<p>[9] Y. Xie. <em>bookdown: Authoring Books and Technical Documents with R
+Markdown</em>. R package version 0.21. 2020. &lt;URL:
+<a href="https://github.com/rstudio/bookdown" class="uri">https://github.com/rstudio/bookdown</a>&gt;.</p>
+<p>[10] Y. Xie. <em>Dynamic Documents with R and knitr</em>. 2nd. ISBN
+978-1498716963. Boca Raton, Florida: Chapman and Hall/CRC, 2015. &lt;URL:
+<a href="https://yihui.org/knitr/" class="uri">https://yihui.org/knitr/</a>&gt;.</p>
+<p>[11] Y. Xie. <em>formatR: Format R Code Automatically</em>. R package version
+1.7. 2019. &lt;URL: <a href="https://github.com/yihui/formatR" class="uri">https://github.com/yihui/formatR</a>&gt;.</p>
+<p>[12] Y. Xie. “knitr: A Comprehensive Tool for Reproducible Research in
+R.” In: <em>Implementing Reproducible Computational Research</em>. Ed. by V.
+Stodden, F. Leisch and R. D. Peng. ISBN 978-1466561595. Chapman and
+Hall/CRC, 2014. &lt;URL:
+<a href="http://www.crcpress.com/product/isbn/9781466561595" class="uri">http://www.crcpress.com/product/isbn/9781466561595</a>&gt;.</p>
+<p>[13] Y. Xie. <em>knitr: A General-Purpose Package for Dynamic Report
+Generation in R</em>. R package version 1.30. 2020. &lt;URL:
+<a href="https://yihui.org/knitr/" class="uri">https://yihui.org/knitr/</a>&gt;.</p>
+<p>[14] Y. Xie and J. Allaire. <em>tufte: Tufte’s Styles for R Markdown
+Documents</em>. R package version 0.9. 2020. &lt;URL:
+<a href="https://github.com/rstudio/tufte" class="uri">https://github.com/rstudio/tufte</a>&gt;.</p>
+<p>[15] Y. Xie, J. Allaire, and G. Grolemund. <em>R Markdown: The Definitive
+Guide</em>. ISBN 9781138359338. Boca Raton, Florida: Chapman and Hall/CRC,
+2018. &lt;URL: <a href="https://bookdown.org/yihui/rmarkdown" class="uri">https://bookdown.org/yihui/rmarkdown</a>&gt;.</p>
+<p>[16] Y. Xie, C. Dervieux, and E. Riederer. <em>R Markdown Cookbook</em>. ISBN
+9780367563837. Boca Raton, Florida: Chapman and Hall/CRC, 2020. &lt;URL:
+<a href="https://bookdown.org/yihui/rmarkdown-cookbook" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook</a>&gt;.</p>
+<p>[17] H. Zhu. <em>kableExtra: Construct Complex Table with kable and Pipe
+Syntax</em>. R package version 1.2.1. 2020. &lt;URL:
+<a href="https://CRAN.R-project.org/package=kableExtra" class="uri">https://CRAN.R-project.org/package=kableExtra</a>&gt;.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

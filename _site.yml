@@ -1,0 +1,7 @@
+name: "Genome 2 Phenome"
+output_dir: "."
+navbar:
+  title: "Genome 2 Phenome"
+  left:
+    - text: "Home"
+      href: index.html
