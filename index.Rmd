@@ -98,7 +98,7 @@ Here are some key points for remote teaching:
 
 ## Meeting days and times
 
-- **Friday from 11:00 AM to 12:00 PM**. 
+- **Monday from 10:00 AM to 11:00 AM**. 
 
 This time slot will be used for teaching, research lab meetings and presenting scientific results. At the end of our meetings (most likely in the last 10 minutes), we will be taking advantage of the Zoom breakout room feature to allow students to discuss with their mentors and report on their progress as well as set individual weekly expectations.
 
@@ -124,9 +124,15 @@ Students are joining a multi-disciplinary team to study the effect of climate ch
 - **Module 2:** Greenhouse (design and conduct controlled GxE experiments to assess the ability of plants to cope with megadrought). Conducting greenhouse experiments might also involve conducting fieldwork in northwestern US (to collect seeds and tissue for laboratory analyses).
 - **Module 3:** Laboratory (e.g. DNA/RNA extractions, qPCR, *in vitro* tissue culture).
 
-Due to the pandemic, the Spring 2021 semester will be devoted on learning and implementing methodologies mostly associated to module 1.
+Due to the pandemic, the Spring 2021 semester will be devoted on learning and implementing methodologies mostly associated to modules 1 and 2.
 
 This VIP course is integrated into the NSF Idaho EPSCoR [GEM3](https://www.idahogem3.org) program, which will provide opportunities for students to engage with members of this state wide initiative as well as multiple stakeholders (both national and regional).   
+
+## Specific projects you could contribute to
+
+1. Greenhouse maintenance and building phenotypic datasets (e.g. chromosome counts, imaging plants for machine learning) used to link genome to phenome processes.
+2. Establishing a reference seed and DNA bank connected to digitized specimens from sagebrush populations.
+3. Working on a genome database to support [Sagebrush Genome Project](https://svenbuerki.github.io/Sagebrush_Genome_Project/).
 
 # <a name="Structure"></a>Structure of the course
 
@@ -152,6 +158,7 @@ After successful completion of this course, students will be able to:
 - Read scientific publications on genome 2 phenome research.
 - Conduct a literature review using our *G2Pminer* R package.
 - Use your literature review to design a research proposal.
+- Establish and manage a common garden experiment.
 - Lead and conduct a research project.
 - Write a reproducible report.
 - Practice communicating scientific results to peers.
