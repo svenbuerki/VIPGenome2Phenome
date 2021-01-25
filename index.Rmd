@@ -131,8 +131,9 @@ This VIP course is integrated into the NSF Idaho EPSCoR [GEM3](https://www.idaho
 ## Specific projects you could contribute to
 
 1. Greenhouse maintenance and building phenotypic datasets (e.g. chromosome counts, imaging plants for machine learning) used to link genome to phenome processes.
-2. Establishing a reference seed and DNA bank connected to digitized specimens from sagebrush populations.
+2. Establishing a reference seed and DNA bank connected to digitized specimens from sagebrush populations. These data will be used to test predictions and validate forecasting models. 
 3. Working on a genome database to support [Sagebrush Genome Project](https://svenbuerki.github.io/Sagebrush_Genome_Project/).
+4. *In vitro* and *ex vitro* propagation of individual lines for genome assembly and common garden experiments.
 
 # <a name="Structure"></a>Structure of the course
 
